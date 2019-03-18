@@ -1,0 +1,48 @@
+server:
+  port: 8080
+  context-path: /admin_web
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/admin?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&tinyInt1isBit=false
+      username: root
+      password: 123456
+      initialSize: 3
+      minIdle: 1
+      maxActive: 60
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 120000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select version()
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters:
+        commons-log.connection-logger-name: stat,wall,log4j
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      useGlobalDataSourceStat: true
+      stat-view-servlet:
+        allow: 127.0.0.1
+        login-username: trafficdruid
+        login-password: 7@3$3erfuytmnv
+        url-pattern: /3b96efcabdc44a8391b822e5c96303bb/*
+  redis:
+    host: cmgitlab.jiemm.cn
+    port: 18190
+    password: 090!1356^&@!%123!
+    database: 0
+    pool:
+      max-idle: 10
+      min-idle: 0
+      max-active: 100
+      max-wait: 10
+mybatis:
+  mapper-locations: classpath:mappers/*.xml
+  type-aliases-package: com.tangdi,pump.model.po
+logging:
+  config: classpath:log4j2-spring.xml

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.common.mapper.PubLogMapper">
+  <resultMap id="BaseResultMap" type="com.tangdi.common.model.po.PubLog">
+    <id column="log_id" jdbcType="VARCHAR" property="logId" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="log_type" jdbcType="VARCHAR" property="logType" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="request_ip" jdbcType="VARCHAR" property="requestIp" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="exception_detail" jdbcType="LONGVARCHAR" property="exceptionDetail" />
+    <result column="params" jdbcType="LONGVARCHAR" property="params" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pub_log
+    where log_id = #{logId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangdi.common.model.po.PubLog">
+    insert into pub_log (log_id, add_time, description, 
+      log_type, method, request_ip, 
+      time, username, exception_detail, 
+      params)
+    values (#{logId,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, 
+      #{logType,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, #{requestIp,jdbcType=VARCHAR}, 
+      #{time,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{exceptionDetail,jdbcType=LONGVARCHAR}, 
+      #{params,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tangdi.common.model.po.PubLog">
+    update pub_log
+    set add_time = #{addTime,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR},
+      log_type = #{logType,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      request_ip = #{requestIp,jdbcType=VARCHAR},
+      time = #{time,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      exception_detail = #{exceptionDetail,jdbcType=LONGVARCHAR},
+      params = #{params,jdbcType=LONGVARCHAR}
+    where log_id = #{logId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select log_id, add_time, description, log_type, method, request_ip, time, username, 
+    exception_detail, params
+    from pub_log
+    where log_id = #{logId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select log_id, add_time, description, log_type, method, request_ip, time, username, 
+    exception_detail, params
+    from pub_log
+  </select>
+</mapper>

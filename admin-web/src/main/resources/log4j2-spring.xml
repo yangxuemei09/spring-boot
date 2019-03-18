@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Configuration status="warn" monitorInterval="30">
+	<Properties>
+		<Property name="LOG_PATH" value="/logs/pump-web" />
+		<Property name="PATTERN">
+			%d{yyyy-MM-dd HH:mm:ss.SSS} |-%-5level [%thread] %c{10} [%L] -| %msg%n
+		</Property>
+	</Properties>
+
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${PATTERN}" />
+		</Console>
+
+		<RollingFile name="InfoRollingFile" fileName="${LOG_PATH}/info.log" filePattern="${LOG_PATH}/${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<Pattern>${PATTERN}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="50 MB" />
+			</Policies>
+			<ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY" />
+		</RollingFile>
+		
+		<RollingFile name="WarnRollingFile" fileName="${LOG_PATH}/warn.log" filePattern="${LOG_PATH}/${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<Pattern>${PATTERN}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="50 MB" />
+			</Policies>
+			<ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY" />
+		</RollingFile>
+		
+		<RollingFile name="ErrorRollingFile" fileName="${LOG_PATH}/error.log" filePattern="${LOG_PATH}/${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<Pattern>${PATTERN}</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="50 MB" />
+			</Policies>
+			<ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY" />
+		</RollingFile>
+	</Appenders>
+	
+	<Loggers>
+		<Logger name="org.springframework" level="INFO" />
+        <Root level="debug">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="InfoRollingFile" />
+            <AppenderRef ref="WarnRollingFile" />
+            <AppenderRef ref="ErrorRollingFile" />
+        </Root>
+    </Loggers>
+</Configuration>

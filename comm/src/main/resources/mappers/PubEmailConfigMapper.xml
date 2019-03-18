@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.common.mapper.PubEmailConfigMapper">
+  <resultMap id="BaseResultMap" type="com.tangdi.common.model.po.PubEmailConfig">
+    <id column="email_config_id" jdbcType="VARCHAR" property="emailConfigId" />
+    <result column="from_user" jdbcType="VARCHAR" property="fromUser" />
+    <result column="host" jdbcType="VARCHAR" property="host" />
+    <result column="pass" jdbcType="VARCHAR" property="pass" />
+    <result column="port" jdbcType="VARCHAR" property="port" />
+    <result column="user" jdbcType="VARCHAR" property="user" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pub_email_config
+    where email_config_id = #{emailConfigId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangdi.common.model.po.PubEmailConfig">
+    insert into pub_email_config (email_config_id, from_user, host, 
+      pass, port, user)
+    values (#{emailConfigId,jdbcType=VARCHAR}, #{fromUser,jdbcType=VARCHAR}, #{host,jdbcType=VARCHAR}, 
+      #{pass,jdbcType=VARCHAR}, #{port,jdbcType=VARCHAR}, #{user,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tangdi.common.model.po.PubEmailConfig">
+    update pub_email_config
+    set from_user = #{fromUser,jdbcType=VARCHAR},
+      host = #{host,jdbcType=VARCHAR},
+      pass = #{pass,jdbcType=VARCHAR},
+      port = #{port,jdbcType=VARCHAR},
+      user = #{user,jdbcType=VARCHAR}
+    where email_config_id = #{emailConfigId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select email_config_id, from_user, host, pass, port, user
+    from pub_email_config
+    where email_config_id = #{emailConfigId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select email_config_id, from_user, host, pass, port, user
+    from pub_email_config
+  </select>
+</mapper>

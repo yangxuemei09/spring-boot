@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.pump.mapper.AdminRoleMapper">
+  <resultMap id="BaseResultMap" type="com.tangdi.pump.model.po.AdminRole">
+    <id column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="is_use" jdbcType="CHAR" property="isUse" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from admin_role
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangdi.pump.model.po.AdminRole">
+    insert into admin_role (role_id, name, is_use, 
+      add_time, update_time)
+    values (#{roleId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{isUse,jdbcType=CHAR}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tangdi.pump.model.po.AdminRole">
+    update admin_role
+    set name = #{name,jdbcType=VARCHAR},
+      <if test ="isUse !=null" >
+          is_use = #{isUse,jdbcType=CHAR},
+      </if>
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select role_id, name, is_use, add_time, update_time
+    from admin_role
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select role_id, name, is_use, add_time, update_time
+    from admin_role
+  </select>
+
+  <!--查询重复记录-->
+  <select id="selectRepeatList" resultMap="BaseResultMap">
+    select role_id, name, is_use, add_time, update_time
+    from admin_role
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test ="name !=null" >
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+</mapper>

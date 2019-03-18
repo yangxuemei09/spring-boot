@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.pump.mapper.AdminMenuMapper">
+  <resultMap id="BaseResultMap" type="com.tangdi.pump.model.po.AdminMenu">
+    <id column="menu_id" jdbcType="VARCHAR" property="menuId" />
+    <result column="parent_menu_id" jdbcType="VARCHAR" property="parentMenuId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="name_en" jdbcType="VARCHAR" property="nameEn" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="component" jdbcType="VARCHAR" property="component" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="leaf" jdbcType="TINYINT" property="leaf" />
+    <result column="is_use" jdbcType="CHAR" property="isUse" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from admin_menu
+    where menu_id = #{menuId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangdi.pump.model.po.AdminMenu">
+    insert into admin_menu (menu_id, parent_menu_id, name, 
+      name_en, path, component, 
+      sort, icon, leaf, is_use, 
+      add_time, update_time)
+    values (#{menuId,jdbcType=VARCHAR}, #{parentMenuId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{nameEn,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{component,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{leaf,jdbcType=TINYINT}, #{isUse,jdbcType=CHAR}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tangdi.pump.model.po.AdminMenu">
+    update admin_menu
+    set parent_menu_id = #{parentMenuId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      name_en = #{nameEn,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      component = #{component,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      icon = #{icon,jdbcType=VARCHAR},
+      leaf = #{leaf,jdbcType=TINYINT},
+      is_use = #{isUse,jdbcType=CHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where menu_id = #{menuId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select menu_id, parent_menu_id, name, name_en, path, component, sort, icon, leaf, 
+    is_use, add_time, update_time
+    from admin_menu
+    where menu_id = #{menuId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select menu_id, parent_menu_id, name, name_en, path, component, sort, icon, leaf, 
+    is_use, add_time, update_time
+    from admin_menu
+  </select>
+
+  <!--根据角色id查询-->
+  <select id="selectListByRoleId" resultMap="BaseResultMap">
+    select a.menu_id, a.parent_menu_id, a.name, a.name_en, a.path, a.component, a.sort, a.icon, a.leaf,
+      a.is_use, a.add_time, a.update_time
+    from admin_menu a left join admin_menu_role b on a.menu_id=b.menu_id
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test ="parentMenuId !=null" >
+        and a.parent_menu_id = #{parentMenuId,jdbcType=VARCHAR}
+      </if>
+      <if test ="name !=null" >
+        and a.name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test ="menuId !=null" >
+        and a.menu_id = #{menuId,jdbcType=VARCHAR}
+      </if>
+      <if test ="roleId !=null" >
+        and b.role_id = #{roleId,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+
+  <!--查询菜单排序序号-->
+  <select id="getMaxSort" resultType="java.lang.Integer">
+    select if(MAX(sort),MAX(sort),0 ) as maxSort
+    from admin_menu
+    where parent_menu_id = #{parentMenuId,jdbcType=VARCHAR}
+  </select>
+  <!--按条件查询-->
+  <select id="selectPageByCondition" resultMap="BaseResultMap">
+    select menu_id, parent_menu_id, name, name_en, path, component, sort, icon, leaf,
+      is_use, add_time, update_time
+    from admin_menu
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test ="parentMenuId !=null" >
+        and parent_menu_id = #{parentMenuId,jdbcType=VARCHAR}
+      </if>
+      <if test ="name !=null" >
+        and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+      </if>
+      <if test ="nameEn !=null" >
+        and name_en like CONCAT('%',#{nameEn,jdbcType=VARCHAR},'%')
+      </if>
+      <if test ="menuId !=null" >
+        and menu_id = #{menuId,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <!--查询重复记录-->
+  <select id="selectRepeatList" resultMap="BaseResultMap">
+    select menu_id, parent_menu_id, name, name_en, path, component, sort, icon, leaf,
+      is_use, add_time, update_time
+    from admin_menu
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test ="parentMenuId !=null" >
+        and parent_menu_id = #{parentMenuId,jdbcType=VARCHAR}
+      </if>
+      <if test ="name !=null" >
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+</mapper>

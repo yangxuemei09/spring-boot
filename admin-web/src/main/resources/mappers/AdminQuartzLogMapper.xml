@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.pump.mapper.AdminQuartzLogMapper">
+  <resultMap id="BaseResultMap" type="com.tangdi.pump.model.po.AdminQuartzLog">
+    <id column="quartz_log_id" jdbcType="VARCHAR" property="quartzLogId" />
+    <result column="baen_name" jdbcType="VARCHAR" property="baenName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="cron_expression" jdbcType="VARCHAR" property="cronExpression" />
+    <result column="is_success" jdbcType="BIT" property="isSuccess" />
+    <result column="job_name" jdbcType="VARCHAR" property="jobName" />
+    <result column="method_name" jdbcType="VARCHAR" property="methodName" />
+    <result column="params" jdbcType="VARCHAR" property="params" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+    <result column="exception_detail" jdbcType="LONGVARCHAR" property="exceptionDetail" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from admin_quartz_log
+    where quartz_log_id = #{quartzLogId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangdi.pump.model.po.AdminQuartzLog">
+    insert into admin_quartz_log (quartz_log_id, baen_name, create_time, 
+      cron_expression, is_success, job_name, 
+      method_name, params, time, 
+      exception_detail)
+    values (#{quartzLogId,jdbcType=VARCHAR}, #{baenName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{cronExpression,jdbcType=VARCHAR}, #{isSuccess,jdbcType=BIT}, #{jobName,jdbcType=VARCHAR}, 
+      #{methodName,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR}, #{time,jdbcType=VARCHAR}, 
+      #{exceptionDetail,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tangdi.pump.model.po.AdminQuartzLog">
+    update admin_quartz_log
+    set baen_name = #{baenName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      cron_expression = #{cronExpression,jdbcType=VARCHAR},
+      is_success = #{isSuccess,jdbcType=BIT},
+      job_name = #{jobName,jdbcType=VARCHAR},
+      method_name = #{methodName,jdbcType=VARCHAR},
+      params = #{params,jdbcType=VARCHAR},
+      time = #{time,jdbcType=VARCHAR},
+      exception_detail = #{exceptionDetail,jdbcType=LONGVARCHAR}
+    where quartz_log_id = #{quartzLogId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select quartz_log_id, baen_name, create_time, cron_expression, is_success, job_name, 
+    method_name, params, time, exception_detail
+    from admin_quartz_log
+    where quartz_log_id = #{quartzLogId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select quartz_log_id, baen_name, create_time, cron_expression, is_success, job_name, 
+    method_name, params, time, exception_detail
+    from admin_quartz_log
+  </select>
+</mapper>

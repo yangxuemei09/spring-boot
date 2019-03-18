@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.common.mapper.PubPictureMapper">
+  <resultMap id="BaseResultMap" type="com.tangdi.common.model.po.PubPicture">
+    <id column="picture_id" jdbcType="VARCHAR" property="pictureId" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="delete_url" jdbcType="VARCHAR" property="deleteUrl" />
+    <result column="filename" jdbcType="VARCHAR" property="filename" />
+    <result column="height" jdbcType="VARCHAR" property="height" />
+    <result column="size" jdbcType="VARCHAR" property="size" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="width" jdbcType="VARCHAR" property="width" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pub_picture
+    where picture_id = #{pictureId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangdi.pump.model.po.PubPicture">
+    insert into pub_picture (picture_id, add_time, delete_url, 
+      filename, height, size, 
+      url, username, width
+      )
+    values (#{pictureId,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{deleteUrl,jdbcType=VARCHAR}, 
+      #{filename,jdbcType=VARCHAR}, #{height,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{width,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tangdi.pump.model.po.PubPicture">
+    update pub_picture
+    set add_time = #{addTime,jdbcType=TIMESTAMP},
+      delete_url = #{deleteUrl,jdbcType=VARCHAR},
+      filename = #{filename,jdbcType=VARCHAR},
+      height = #{height,jdbcType=VARCHAR},
+      size = #{size,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      width = #{width,jdbcType=VARCHAR}
+    where picture_id = #{pictureId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select picture_id, add_time, delete_url, filename, height, size, url, username, width
+    from pub_picture
+    where picture_id = #{pictureId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select picture_id, add_time, delete_url, filename, height, size, url, username, width
+    from pub_picture
+  </select>
+</mapper>

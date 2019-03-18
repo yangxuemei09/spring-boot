@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.pump.mapper.AdminMenuRoleMapper">
+  <resultMap id="BaseResultMap" type="com.tangdi.pump.model.po.AdminMenuRole">
+    <id column="role_menu_id" jdbcType="VARCHAR" property="roleMenuId" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="menu_id" jdbcType="VARCHAR" property="menuId" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from admin_menu_role
+    where role_menu_id = #{roleMenuId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangdi.pump.model.po.AdminMenuRole">
+    insert into admin_menu_role (role_menu_id, role_id, menu_id, 
+      add_time, update_time)
+    values (#{roleMenuId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tangdi.pump.model.po.AdminMenuRole">
+    update admin_menu_role
+    set role_id = #{roleId,jdbcType=VARCHAR},
+      menu_id = #{menuId,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where role_menu_id = #{roleMenuId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select role_menu_id, role_id, menu_id, add_time, update_time
+    from admin_menu_role
+    where role_menu_id = #{roleMenuId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select role_menu_id, role_id, menu_id, add_time, update_time
+    from admin_menu_role
+  </select>
+
+  <!--根据角色id删除-->
+  <delete id="deleteByRoleId" parameterType="java.lang.String">
+    delete from admin_menu_role
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
+
+  <!--批量新增-->
+  <insert id="insertList" parameterType="java.util.List">
+    insert into admin_menu_role (role_menu_id, role_id, menu_id, add_time, update_time)
+    values
+    <foreach collection="list" item="item"  separator="," >
+      (#{item.roleMenuId},#{item.roleId},#{item.menuId},#{item.addTime},#{item.updateTime})
+    </foreach>
+  </insert>
+
+
+</mapper>

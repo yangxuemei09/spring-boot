@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tangdi.common.mapper.PubVerifyCodeMapper">
+  <resultMap id="BaseResultMap" type="com.tangdi.common.model.po.PubVerifyCode">
+    <id column="verify_code_id" jdbcType="VARCHAR" property="verifyCodeId" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="scenes" jdbcType="VARCHAR" property="scenes" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pub_verify_code
+    where verify_code_id = #{verifyCodeId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tangdi.pump.model.po.PubVerifyCode">
+    insert into pub_verify_code (verify_code_id, code, add_time, 
+      status, type, value, scenes
+      )
+    values (#{verifyCodeId,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=BIT}, #{type,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, #{scenes,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tangdi.pump.model.po.PubVerifyCode">
+    update pub_verify_code
+    set code = #{code,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=BIT},
+      type = #{type,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
+      scenes = #{scenes,jdbcType=VARCHAR}
+    where verify_code_id = #{verifyCodeId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select verify_code_id, code, add_time, status, type, value, scenes
+    from pub_verify_code
+    where verify_code_id = #{verifyCodeId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select verify_code_id, code, add_time, status, type, value, scenes
+    from pub_verify_code
+  </select>
+</mapper>
