@@ -32,9 +32,9 @@ spring:
         login-password: 7@3$3erfuytmnv
         url-pattern: /3b96efcabdc44a8391b822e5c96303bb/*
   redis:
-    host: cmgitlab.jiemm.cn
-    port: 18190
-    password: 090!1356^&@!%123!
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
     database: 0
     pool:
       max-idle: 10
