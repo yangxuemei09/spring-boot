@@ -81,6 +81,6 @@ public class PubLogServiceImpl implements PubLogService {
         pubLog.setMethod(methodName);
         pubLog.setUsername(username);
         pubLog.setParams(params + " }");
-//        pubLogMapper.insert(pubLog);
+        pubLogMapper.insert(pubLog);
     }
 }
